@@ -1,0 +1,20 @@
+[package]
+name = "zotero_api"
+version = "0.1.0"
+authors = ["Martin Kunz <martinkunz@email.cz>"]
+edition = "2021"
+
+# TODO: Add reactivex feature to return download progress observables <01-08-23> 
+
+[dependencies]
+reqwest = { version = "^0.11", features = ["json"] }
+url = "^2.4"
+mime = "^0.3"
+thiserror = "^1.0"
+log = "^0.4"
+derive_builder = "^0.12"
+rxrust = "1.0.0-beta.4"
+serde_json = "^1.0"
+
+[dev-dependencies]
+tokio-test = "*"
