@@ -1,0 +1,24 @@
+name: Code Quality
+
+on: [push, pull_request]
+
+env:
+  RUSTFLAGS: "-Dwarnings"
+  CARGO_TERM_COLOR: always
+  ZOTERO_API_KEY_TEST: ${{ secrets.ZOTERO_API_KEY }}
+  ZOTERO_USER_ID_TEST: ${{ secrets.ZOTERO_USER_ID }}
+
+jobs:
+  format_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check Format
+        run: cargo fmt --all -- --check
+
+  clippy_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Clippy
+        run: cargo clippy --all-targets --all-features

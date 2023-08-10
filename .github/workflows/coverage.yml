@@ -1,0 +1,24 @@
+name: Coverage
+
+on: [push, pull_request]
+
+env:
+  github-token: ${{ secrets.GITHUB_TOKEN }}
+  CARGO_TERM_COLOR: always
+  ZOTERO_API_KEY_TEST: ${{ secrets.ZOTERO_API_KEY }}
+  ZOTERO_USER_ID_TEST: ${{ secrets.ZOTERO_USER_ID }}
+
+jobs:
+  Coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install Toolchain
+        run: rustup update stable && rustup default stable
+      - name: Install cargo-tarpaulin
+        run: cargo install cargo-tarpaulin
+      - name: Coverage with tarpaulin
+        run: cargo tarpaulin --all --all-features --timeout 600 --out Lcov -- --test-threads 1
+      - name: Upload coverage
+        uses: Coverallsapp/github-action@v2
